@@ -5,23 +5,23 @@ pipeline {
 
     stages{ 
         stage("build"){ 
+            when { changeset "**/worker/**" }
             steps{ 
-                 when { changeset "**/worker/**" }
                  echo 'Compiling worker app' 
                  dir('worker') { sh 'mvn compile' }
             } 
         } 
         stage("test"){ 
+            when { changeset "**/worker/**" }
             steps{ 
-                 when { changeset "**/worker/**" }
                  echo 'Running Unit Tests on worker app' 
                  dir('worker') { sh 'mvn clean test' }
             } 
         } 
         stage("package"){ 
-            steps{ 
-                 when { changeset "**/worker/**"
+            when { changeset "**/worker/**"
                         branch master }
+            steps{ 
                  echo 'Packaging worker app' 
                  dir('worker') { sh 'mvn package -DskipTests' }
             } 
