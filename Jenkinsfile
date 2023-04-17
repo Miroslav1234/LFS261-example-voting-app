@@ -200,6 +200,9 @@ pipeline {
 
     stage('vote-docker-package') {
       agent any
+      when {
+        changeset '**/vote/**'
+      }
       steps {
         echo 'Packaging vote app with docker'
         script {
